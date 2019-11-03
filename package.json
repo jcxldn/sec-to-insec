@@ -1,0 +1,26 @@
+{
+  "name": "sec-to-insec",
+  "version": "1.0.0",
+  "description": "A NodeJS proxy to access HTTPS only websites over HTTP.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prouser123/sec-to-insec.git"
+  },
+  "keywords": [
+    "reverse-proxy"
+  ],
+  "author": "Prouser123",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/Prouser123/sec-to-insec/issues"
+  },
+  "homepage": "https://github.com/Prouser123/sec-to-insec#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^0.20.0"
+  }
+}
