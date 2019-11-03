@@ -1,3 +1,9 @@
+// Check to make sure a HOSTNAME environment variable was passed
+if (!process.env.HOSTNAME) {
+  console.error("You must provide a HOSTNAME environment variable!");
+  process.exit(1);
+}
+
 var express = require("express");
 var proxy = require("http-proxy-middleware");
 const pj = require("./package.json");
