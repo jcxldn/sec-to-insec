@@ -32,7 +32,7 @@ app.use(
         "https://" +
         req.hostname
           .toLowerCase()
-          .split(`.${process.env.hostname.toLowerCase()}`)[0]
+          .split(`.${process.env.HOSTNAME.toLowerCase()}`)[0]
       );
     },
     target: "tld.invalid",
@@ -52,5 +52,5 @@ const port = process.env.PORT || 3000;
 
 app.listen(port);
 
-console.log(`Using hostname prefix of: *.${process.env.hostname}`);
+console.log(`Using hostname prefix of: *.${process.env.HOSTNAME}`);
 console.log(`Listening on port ${port}`);
