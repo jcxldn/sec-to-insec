@@ -1,0 +1,37 @@
+# Only deploy on the master branch
+if: branch = master
+
+dist: xenial
+# No specific language to run with
+language: minimal
+
+# Only clone the latest commit
+git:
+  depth: 1
+  
+env:
+  global:
+    - DOCKER_CLI_EXPERIMENTAL=enabled
+  
+    # Set your docker tag here
+    - DOCKER_TAG=prouser123/sec-to-insec:latest
+    # Intel X64, Arm X64, Arm6 & Arm7
+    - DOCKER_PLATFORMS=linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+    
+    # You will need to add DOCKER_ID & DOCKER_PASS env variables to this project
+
+before_install:
+  # Install the latest version of docker-ce and qemu
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce qemu-user-static
+  
+install:
+  - docker login -u $DOCKER_ID -p $DOCKER_PASS
+  # Add qemu / arm support to buildx
+  - docker run --rm --privileged docker/binfmt:820fdd95a9972a5308930a2bdfb8573dd4447ad3
+  # Create the builder
+  - docker buildx create --use
+  # Build the multi-arch images
+  - docker buildx build . --platform $DOCKER_PLATFORMS -t $DOCKER_TAG --push
